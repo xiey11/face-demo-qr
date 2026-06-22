@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>AI 照片生成 — 加载中</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;
+      background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);
+      min-height:100vh;color:#fff;display:flex;align-items:center;justify-content:center;padding:20px;
+    }
+    .card{
+      background:rgba(255,255,255,.06);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:24px;padding:48px 32px;text-align:center;max-width:380px;width:100%;
+      box-shadow:0 20px 60px rgba(0,0,0,.3);
+    }
+    .icon{font-size:56px;margin-bottom:20px}
+    h1{font-size:22px;margin-bottom:8px;font-weight:600}
+    .subtitle{font-size:14px;opacity:.7;margin-bottom:32px}
+    .loader{
+      width:48px;height:48px;margin:0 auto 24px;border:3px solid rgba(255,255,255,.1);
+      border-top:3px solid #ff4081;border-radius:50%;animation:spin .8s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .status{font-size:14px;opacity:.85;margin-top:12px;min-height:20px}
+    .err{color:#ff8a8a;line-height:1.6}
+    .err button{
+      margin-top:16px;background:#ff4081;color:#fff;border:none;
+      padding:10px 24px;border-radius:24px;font-size:14px;cursor:pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">📸</div>
+    <h1>AI 照片生成</h1>
+    <div class="subtitle">正在跳转，请稍候...</div>
+    <div class="loader" id="loader"></div>
+    <div class="status" id="status">连接服务中</div>
+  </div>
+
+  <script>
+    const statusEl = document.getElementById('status');
+    const loaderEl = document.getElementById('loader');
+
+    function showError(msg) {
+      loaderEl.style.display = 'none';
+      statusEl.className = 'err';
+      statusEl.innerHTML = msg + '<br/><button onclick="location.reload()">重试</button>';
+    }
+
+    fetch('./url.txt?t=' + Date.now(), { cache: 'no-store' })
+      .then(r => {
+        if (!r.ok) throw new Error('配置文件读取失败');
+        return r.text();
+      })
+      .then(url => {
+        url = url.trim();
+        if (!url || !url.startsWith('http')) {
+          throw new Error('地址未配置');
+        }
+        statusEl.textContent = '即将进入上传页面...';
+        setTimeout(() => { location.replace(url); }, 300);
+      })
+      .catch(e => {
+        showError('⚠️ 服务暂未启动<br/>请联系管理员');
+      });
+  </script>
+</body>
+</html>
