@@ -1,1 +1,1 @@
-https://wiley-omissions-moments-advertisers.trycloudflare.com
+https://test-from-push-script.example.com
