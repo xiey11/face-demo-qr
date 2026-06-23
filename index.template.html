@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <!-- 主跳转：meta refresh，服务器级别，不依赖 JS，弱网也稳定 -->
-  <meta http-equiv="refresh" content="0; url=https://disclosure-msie-trained-jim.trycloudflare.com">
+  <meta http-equiv="refresh" content="0; url=__TARGET_URL__">
   <title>AI 照片生成 — 跳转中</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -43,14 +43,14 @@
     <h1>AI 照片生成</h1>
     <div class="subtitle">正在跳转，请稍候...</div>
     <div class="loader"></div>
-    <a class="fallback" href="https://disclosure-msie-trained-jim.trycloudflare.com">如果未自动跳转，点这里</a>
+    <a class="fallback" href="__TARGET_URL__">如果未自动跳转，点这里</a>
     <div class="tip">推荐使用相机直接扫码<br/>避免使用微信扫一扫</div>
   </div>
   <script>
     // JS 兜底：如果 meta refresh 没生效，2 秒后强制跳
     setTimeout(function(){
-      try { location.replace("https://disclosure-msie-trained-jim.trycloudflare.com"); }
-      catch(e) { location.href = "https://disclosure-msie-trained-jim.trycloudflare.com"; }
+      try { location.replace("__TARGET_URL__"); }
+      catch(e) { location.href = "__TARGET_URL__"; }
     }, 1500);
   </script>
 </body>
